@@ -1,3 +1,3 @@
-const greeting : string = "Hello World!";
+import Cache from "./cache";
 
-console.log(greeting);
+const cache = new Cache();
