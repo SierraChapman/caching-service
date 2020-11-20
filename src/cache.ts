@@ -12,6 +12,10 @@ class Cache {
     remove(name: string) {
         delete this.data[name];
     }
+
+    fetch(name: string) {
+        return this.data[name];
+    }
 }
 
 export default Cache;
