@@ -1,5 +1,5 @@
 class Cache {
-    private data: object;
+    private data: {[name: string]: any};
 
     constructor() {
         this.data = {};
@@ -7,6 +7,10 @@ class Cache {
 
     add(name: string, value: any) {
         this.data = { ...this.data, [name]: value };
+    }
+
+    remove(name: string) {
+        delete this.data[name];
     }
 }
 
