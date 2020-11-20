@@ -4,6 +4,10 @@ class Cache {
     constructor() {
         this.data = {};
     }
+
+    add(name: string, value: any) {
+        this.data = { ...this.data, [name]: value };
+    }
 }
 
 export default Cache;
