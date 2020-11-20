@@ -1,0 +1,24 @@
+{
+  "name": "caching-service",
+  "version": "1.0.0",
+  "description": "a standalone caching service",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "start": "node ./build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SierraChapman/caching-service.git"
+  },
+  "author": "Sierra Chapman",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/SierraChapman/caching-service/issues"
+  },
+  "homepage": "https://github.com/SierraChapman/caching-service#readme",
+  "dependencies": {
+    "typescript": "^4.1.2"
+  }
+}
