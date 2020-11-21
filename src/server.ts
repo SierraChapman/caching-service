@@ -33,12 +33,20 @@ app.post("/", function (req, res) {
 });
 
 app.delete("/", function (req, res) {
-    if (typeof req.query.name === "string") {
-        cache.remove(req.query.name);
+    if (typeof req.query.name !== "string") {
+        res.status(400).json({
+            message: "This method requires the query parameter 'name'"
+        });
+        return;
+    }
+
+    const removed = cache.remove(req.query.name);
+    
+    if (removed) {
         res.sendStatus(200);
     } else {
-        res.status(400).send({
-            message: "This method requires the query parameter \"name\""
+        res.status(404).json({
+            message: "No value associated with that name"
         });
     }
 });
