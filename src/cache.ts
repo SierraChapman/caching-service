@@ -29,9 +29,9 @@ class Cache {
 
     add(name: string, value: any) {
         const newItem: CacheItem = { name, value };
+
         this.pushToLinkedList(newItem);
-        
-        this.data = { ...this.data, [name]: newItem };
+        this.data[name] = newItem;
     }
 
     remove(name: string): boolean {
@@ -53,6 +53,19 @@ class Cache {
 
         this.tail.prev = item;
         if (item.prev !== undefined) { item.prev.next = item; }
+    }
+
+    print() {
+        let currentItem = this.head.next;
+        let i = 1;
+
+        console.log("\nCurrent cache contents:");
+
+        while (currentItem !== undefined && "value" in currentItem) {
+            console.log(`${i}) ${currentItem.name}: ${currentItem.value}`);
+            currentItem = currentItem.next;
+            i++;
+        }
     }
 }
 

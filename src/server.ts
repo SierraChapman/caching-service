@@ -30,6 +30,8 @@ app.get("/", function (req, res) {
 app.post("/", function (req, res) {
     cache.add(req.body.name, req.body.value);
     res.sendStatus(200);
+
+    cache.print();
 });
 
 app.delete("/", function (req, res) {
