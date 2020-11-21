@@ -1,9 +1,12 @@
 import express, { query } from "express";
 import Cache from "./cache";
+import * as cacheConfig from "./cache-config.json";
+
+const options: { maxItems?: number, verbose?: boolean } = cacheConfig;
 
 const app: express.Application = express();
 const PORT: number = 3000;
-const cache: Cache = new Cache(5);
+const cache: Cache = new Cache(("maxItems" in options) ? options.maxItems : undefined);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
