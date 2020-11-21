@@ -28,6 +28,7 @@ class Cache {
     }
 
     add(name: string, value: any) {
+        this.remove(name);
         const newItem: CacheItem = { name, value };
 
         this.pushToLinkedList(newItem);
@@ -36,6 +37,7 @@ class Cache {
 
     remove(name: string): boolean {
         if (name in this.data) {
+            this.removeFromLinkedList(this.data[name]);
             delete this.data[name];
             return true;
         } else {
@@ -53,6 +55,13 @@ class Cache {
 
         this.tail.prev = item;
         if (item.prev !== undefined) { item.prev.next = item; }
+    }
+
+    private removeFromLinkedList(item: CacheItem) {
+        if (item.prev && item.next) {
+            item.prev.next = item.next;
+            item.next.prev = item.prev;
+        }
     }
 
     print() {
