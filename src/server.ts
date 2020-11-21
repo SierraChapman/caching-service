@@ -1,4 +1,4 @@
-import express from "express";
+import express, { query } from "express";
 import Cache from "./cache";
 
 const app: express.Application = express();
@@ -9,12 +9,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get("/", function (req, res) {
-    if (typeof req.query.name === "string") {
-        res.send(cache.fetch(req.query.name));
-    } else {
-        res.status(400).send({
-            message: "This method requires the query parameter \"name\""
+    if (typeof req.query.name !== "string") {
+        res.status(400).json({
+            message: "This method requires the query parameter 'name'"
         });
+        return;
+    }
+
+    const value = cache.fetch(req.query.name);
+    
+    if (value === undefined) {
+        res.status(404).json({
+            message: "No value associated with that name"
+        });
+    } else {
+        res.status(200).json({ value });
     }
 });
 
