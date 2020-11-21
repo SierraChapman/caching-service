@@ -3,7 +3,7 @@ import Cache from "./cache";
 
 const app: express.Application = express();
 const PORT: number = 3000;
-const cache: Cache = new Cache();
+const cache: Cache = new Cache(5);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

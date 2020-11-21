@@ -17,14 +17,19 @@ class Cache {
     private data: { [name: string]: CacheItem };
     private head: Head;
     private tail: Tail;
+    private maxItems?: number;
+    private itemCount: number;
 
-    constructor() {
+    constructor(maxItems?: number) {
         this.data = {};
         this.head = {};
         this.tail = {};
 
         this.head.next = this.tail;
         this.tail.prev = this.head;
+
+        this.itemCount = 0;
+        this.maxItems = maxItems;
     }
 
     add(name: string, value: any) {
@@ -38,6 +43,11 @@ class Cache {
         } else {
             newItem = { name, value };
             this.data[name] = newItem;
+            this.itemCount++;
+
+            if (this.maxItems && this.itemCount > this.maxItems) {
+                this.evictLeastRecentlyUsed();
+            }
         }
 
         this.pushToLinkedList(newItem);
@@ -47,6 +57,7 @@ class Cache {
         if (name in this.data) {
             this.removeFromLinkedList(this.data[name]);
             delete this.data[name];
+            this.itemCount--;
             return true;
         } else {
             return false;
@@ -76,6 +87,14 @@ class Cache {
         if (item.prev && item.next) {
             item.prev.next = item.next;
             item.next.prev = item.prev;
+        }
+    }
+
+    private evictLeastRecentlyUsed() {
+        if (this.head.next !== undefined && "name" in this.head.next) {
+            this.removeFromLinkedList(this.head.next);
+            delete this.data[this.head.next.name];
+            this.itemCount--;
         }
     }
 
