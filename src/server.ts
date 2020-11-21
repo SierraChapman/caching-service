@@ -24,6 +24,7 @@ app.get("/", function (req, res) {
         });
     } else {
         res.status(200).json({ value });
+        cache.print();
     }
 });
 
@@ -46,6 +47,7 @@ app.delete("/", function (req, res) {
     
     if (removed) {
         res.sendStatus(200);
+        cache.print();
     } else {
         res.status(404).json({
             message: "No value associated with that name"

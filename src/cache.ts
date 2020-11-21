@@ -46,7 +46,14 @@ class Cache {
     }
 
     fetch(name: string) {
-        return this.data[name];
+        if (name in this.data) {
+            const item = this.data[name];
+            this.removeFromLinkedList(item);
+            this.pushToLinkedList(item);
+            return item.value;
+        } else {
+            return undefined;
+        }
     }
 
     private pushToLinkedList(item: CacheItem) {
