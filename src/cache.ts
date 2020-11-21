@@ -28,11 +28,19 @@ class Cache {
     }
 
     add(name: string, value: any) {
-        this.remove(name);
-        const newItem: CacheItem = { name, value };
+
+        let newItem: CacheItem;
+
+        if (name in this.data) {
+            newItem = this.data[name];
+            newItem.value = value;
+            this.removeFromLinkedList(newItem);
+        } else {
+            newItem = { name, value };
+            this.data[name] = newItem;
+        }
 
         this.pushToLinkedList(newItem);
-        this.data[name] = newItem;
     }
 
     remove(name: string): boolean {
