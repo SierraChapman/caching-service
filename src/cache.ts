@@ -82,6 +82,9 @@ class Cache {
             currentItem = currentItem.next;
             i++;
         }
+
+        const memoryUsage = process.memoryUsage();
+        console.log(`Memory usage: ${Math.round(memoryUsage.heapUsed / memoryUsage.heapTotal * 100)}%`);
     }
 }
 
