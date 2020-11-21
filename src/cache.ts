@@ -1,8 +1,8 @@
 interface CacheItem {
     name: string;
     value: any;
-    next: CacheItem | Tail;
-    prev: CacheItem | Head;
+    next?: CacheItem | Tail;
+    prev?: CacheItem | Head;
 }
 
 interface Head {
@@ -28,7 +28,10 @@ class Cache {
     }
 
     add(name: string, value: any) {
-        this.data = { ...this.data, [name]: { name, value, next: this.tail, prev: this.head } };
+        const newItem: CacheItem = { name, value };
+        this.pushToLinkedList(newItem);
+        
+        this.data = { ...this.data, [name]: newItem };
     }
 
     remove(name: string): boolean {
@@ -42,6 +45,14 @@ class Cache {
 
     fetch(name: string) {
         return this.data[name];
+    }
+
+    private pushToLinkedList(item: CacheItem) {
+        item.next = this.tail;
+        item.prev = this.tail.prev;
+
+        this.tail.prev = item;
+        if (item.prev !== undefined) { item.prev.next = item; }
     }
 }
 
