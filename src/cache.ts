@@ -1,5 +1,5 @@
 class Cache {
-    private data: {[name: string]: any};
+    private data: { [name: string]: any };
 
     constructor() {
         this.data = {};
@@ -9,8 +9,13 @@ class Cache {
         this.data = { ...this.data, [name]: value };
     }
 
-    remove(name: string) {
-        delete this.data[name];
+    remove(name: string): boolean {
+        if (name in this.data) {
+            delete this.data[name];
+            return true;
+        } else {
+            return false;
+        }
     }
 
     fetch(name: string) {
