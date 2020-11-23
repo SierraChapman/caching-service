@@ -91,9 +91,11 @@ class Cache {
     }
 
     private evictLeastRecentlyUsed() {
-        if (this.head.next !== undefined && "name" in this.head.next) {
-            this.removeFromLinkedList(this.head.next);
-            delete this.data[this.head.next.name];
+        const itemToEvict = this.head.next;
+
+        if (itemToEvict !== undefined && "name" in itemToEvict) {
+            this.removeFromLinkedList(itemToEvict);
+            delete this.data[itemToEvict.name];
             this.itemCount--;
         }
     }
