@@ -21,7 +21,7 @@ class Cache {
     private itemCount: number;
     private optionalPrint: () => void;
 
-    constructor(options: { maxItems?: number, verbose?: boolean } = {}) {
+    constructor(options: { maxItems?: number | null, verbose?: boolean } = {}) {
         this.data = {};
         this.head = {};
         this.tail = {};
@@ -30,7 +30,7 @@ class Cache {
         this.tail.prev = this.head;
 
         this.itemCount = 0;
-        this.maxItems = options.maxItems;
+        this.maxItems = (typeof options.maxItems === "number") ? options.maxItems : undefined;
 
         this.optionalPrint = options.verbose ? this.print : () => {};
     }

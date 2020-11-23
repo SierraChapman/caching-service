@@ -1,4 +1,4 @@
 {
-    "maxItems": 5,
-    "verbose": true
+    "maxItems": null,
+    "verbose": false
 }
