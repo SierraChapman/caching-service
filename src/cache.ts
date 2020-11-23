@@ -20,7 +20,7 @@ class Cache {
     private maxItems?: number;
     private itemCount: number;
 
-    constructor(maxItems?: number) {
+    constructor(options: { maxItems?: number, verbose?: boolean } = {}) {
         this.data = {};
         this.head = {};
         this.tail = {};
@@ -29,7 +29,7 @@ class Cache {
         this.tail.prev = this.head;
 
         this.itemCount = 0;
-        this.maxItems = maxItems;
+        this.maxItems = options.maxItems;
     }
 
     add(name: string, value: any) {
