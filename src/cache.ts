@@ -19,6 +19,7 @@ class Cache {
     private tail: Tail;
     private maxItems?: number;
     private itemCount: number;
+    private optionalPrint: () => void;
 
     constructor(options: { maxItems?: number, verbose?: boolean } = {}) {
         this.data = {};
@@ -30,6 +31,8 @@ class Cache {
 
         this.itemCount = 0;
         this.maxItems = options.maxItems;
+
+        this.optionalPrint = options.verbose ? this.print : () => {};
     }
 
     add(name: string, value: any) {
@@ -51,6 +54,8 @@ class Cache {
         }
 
         this.pushToLinkedList(newItem);
+
+        this.optionalPrint();
     }
 
     remove(name: string): boolean {
@@ -58,10 +63,15 @@ class Cache {
             this.removeFromLinkedList(this.data[name]);
             delete this.data[name];
             this.itemCount--;
+
+            this.optionalPrint();
             return true;
         } else {
+
+            this.optionalPrint();
             return false;
         }
+        
     }
 
     fetch(name: string) {
@@ -69,8 +79,11 @@ class Cache {
             const item = this.data[name];
             this.removeFromLinkedList(item);
             this.pushToLinkedList(item);
+
+            this.optionalPrint();
             return item.value;
         } else {
+            this.optionalPrint();
             return undefined;
         }
     }
@@ -100,7 +113,7 @@ class Cache {
         }
     }
 
-    print() {
+    private print() {
         let currentItem = this.head.next;
         let i = 1;
 
